@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 String user = usernameET.getText().toString();
                 String pass = passwordET.getText().toString();
                 String repass = repasswordET.getText().toString();
+                Integer role = 0; // 0 means a simple user -- 1 means admin
 
                 if(user.equals("")||pass.equals("")||repass.equals(""))
                     Toast.makeText(MainActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
@@ -66,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
                     if(pass.equals(repass)){
                         Boolean checkuser = DB.checkusername(user);
                         if(checkuser==false){
-                            Boolean insert = DB.insertData(user, pass);
+                            Boolean insert = DB.insertData(user, pass, role);
                             if(insert==true){
                                 Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                                Intent intent = new Intent(getApplicationContext(),UserHome.class);
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();

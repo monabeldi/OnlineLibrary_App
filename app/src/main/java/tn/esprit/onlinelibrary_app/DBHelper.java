@@ -1,10 +1,12 @@
 package tn.esprit.onlinelibrary_app;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -17,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        MyDB.execSQL("create Table users(username TEXT primary key, password TEXT)");
+        MyDB.execSQL("create Table users(username TEXT primary key, password TEXT, role INTEGER default 0)");
     }
 
     @Override
@@ -25,11 +27,14 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists users");
     }
 
-    public Boolean insertData(String username, String password) {
+    public Boolean insertData(String username, String password, Integer role) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
         contentValues.put("password", password);
+
+        contentValues.put("role", role);
+
         long result = MyDB.insert("users", null, contentValues);
         if (result == -1) return false;
         else
@@ -53,4 +58,23 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return false;
     }
+
+    public Integer checkrole(String u_name) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        //Cursor cursor = MyDB.rawQuery("Select role from users where username =?", new String[]{u_name});
+
+       // String id = cursor.getString(cursor.getColumnIndex("role") );
+
+     //   Integer i = cursor.getColumnIndex("role");
+
+
+     //   String s = cursor.getString(i);
+
+        //Integer roleValue  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("role")));
+
+        return 0;
+
+    }
+
+
 }

@@ -35,10 +35,20 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 else{
                     Boolean checkuserpass = DB.checkusernamepassword(user, pass);
+                    Integer checkrole = DB.checkrole(user);
+
+
                     if(checkuserpass==true){
-                        Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
-                        Intent intent  = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
+                        if(checkrole == 0){
+                            Toast.makeText(LoginActivity.this, "User Sign in successfull", Toast.LENGTH_SHORT).show();
+                            Intent intent1  = new Intent(getApplicationContext(), UserHome.class);
+                            startActivity(intent1);
+                        }else if(checkrole == 1){
+                            Toast.makeText(LoginActivity.this, "Admin Sign in successfull", Toast.LENGTH_SHORT).show();
+                            Intent intent2  = new Intent(getApplicationContext(), AdminHome.class);
+                            startActivity(intent2);
+                        }
+
                     }else{
                         Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                     }
